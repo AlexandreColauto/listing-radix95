@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useMoralis, useWeb3Transfer } from "react-moralis";
 import axios from "axios";
 
-function listing() {
+function Listing() {
   const fee_wallet = process.env.NEXT_PUBLIC_FEE_WALLET;
   const { isAuthenticated, Moralis, authenticate, web3, enableWeb3 } =
     useMoralis();
@@ -190,8 +190,8 @@ function listing() {
             {projectLinks.map((link, index) => (
               <div key={index}>
                 <select onChange={(e) => (link.type = e.target.value)}>
-                  {Object.keys(SOCIAL_LINKS).map((link) => (
-                    <option>{link}</option>
+                  {Object.keys(SOCIAL_LINKS).map((link, index) => (
+                    <option key={index}>{link}</option>
                   ))}
                 </select>
 
@@ -214,4 +214,4 @@ function listing() {
   );
 }
 
-export default listing;
+export default Listing;

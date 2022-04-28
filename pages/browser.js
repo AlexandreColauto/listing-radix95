@@ -3,7 +3,7 @@ import { useMoralis } from "react-moralis";
 import axios from "axios";
 import Details from "./details";
 
-function browser() {
+function Browser() {
   const [itemsMetadata, setItemsMetadata] = useState();
   const [details, setDetails] = useState();
   const { Moralis, web3, enableWeb3 } = useMoralis();
@@ -60,4 +60,4 @@ function browser() {
   );
 }
 
-export default browser;
+export default Browser;
