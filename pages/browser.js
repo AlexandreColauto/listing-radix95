@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useMoralis } from "react-moralis";
 import axios from "axios";
-import Details from "./details";
+import Details from "../components/details";
 
 function Browser() {
   const [itemsMetadata, setItemsMetadata] = useState();
