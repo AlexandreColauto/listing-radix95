@@ -6,7 +6,6 @@ import { useMoralis } from "react-moralis";
 
 export default function Home() {
   const { authenticate, isAuthenticated } = useMoralis();
-
   const handleClick = (e) => {
     authenticate();
   };

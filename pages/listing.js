@@ -3,7 +3,8 @@ import { useMoralis, useWeb3Transfer } from "react-moralis";
 import axios from "axios";
 
 function Listing() {
-  const fee_wallet = process.env.NEXT_PUBLIC_FEE_WALLET;
+  const fee = process.env.NEXT_PUBLIC_FEE_AMOUNT;
+  const radix95 = process.env.NEXT_PUBLIC_RADIX_ADDRESS;
   const { isAuthenticated, Moralis, authenticate, web3, enableWeb3 } =
     useMoralis();
   const [loading, setLoading] = useState(false);
@@ -66,31 +67,27 @@ function Listing() {
   const chargeFee = async () => {
     if (!fee_wallet) return;
     if (!web3) await enableWeb3();
-    console.log(web3);
-    const bnbPrice = await getBNBPrice();
-    let fee;
     if (formFields.radixBased === "true") {
-      fee = 5;
+      const transaction = await Moralis.transfer({
+        amount: Moralis.Units.Token(fee, 9),
+        receiver: "0x000000000000000000000000000000000000dEaD",
+        type: "erc20",
+        contractAddress: radix95,
+      });
+      setLoading(true);
+      await transaction.wait();
     } else {
-      fee = 10;
+      const transaction = await Moralis.transfer({
+        amount: Moralis.Units.Token(2 * fee, 9),
+        receiver: "0x000000000000000000000000000000000000dEaD",
+        type: "erc20",
+        contractAddress: radix95,
+      });
+      setLoading(true);
+      await transaction.wait();
     }
-    const transaction = await Moralis.transfer({
-      type: "native",
-      amount: Moralis.Units.ETH(fee / bnbPrice),
-      receiver: fee_wallet,
-    });
-    setLoading(true);
-    await transaction.wait();
     console.log("complete listing");
     completeListing();
-  };
-
-  const getBNBPrice = async () => {
-    const response = await axios.get(
-      "https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT"
-    );
-    console.log(response.data.price / 100);
-    return response.data.price / 100;
   };
 
   const completeListing = async () => {
