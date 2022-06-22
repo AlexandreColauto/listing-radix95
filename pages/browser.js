@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useMoralis } from "react-moralis";
 import axios from "axios";
 import Details from "../components/details";
+import styled from "styled-components";
+import { Panel } from "react95";
 
 function Browser() {
   const [itemsMetadata, setItemsMetadata] = useState();
@@ -27,8 +29,28 @@ function Browser() {
       setItemsMetadata(response.data);
       return response.data;
     }
+     //FRONTEND
+  const Wrapper = styled.div`
+  padding: 5rem;
+  background: ___CSS_0___;
+  #default-buttons button {
+    margin-bottom: 1rem;
+    margin-right: 1rem;
+  }
+
+  #cutout {
+    background: ___CSS_1___;
+    padding: 1rem;
+    width: 300px;
+  }
+`;
   };
   return (
+    <Panel
+        variant="outside"
+        shadow
+        style={{ padding: "0.5rem", lineHeight: "1.5", width: 600 }}
+      >
     <div>
       {!details ? (
         <div>
@@ -57,6 +79,7 @@ function Browser() {
         </div>
       )}
     </div>
+    </Panel>
   );
 }
 

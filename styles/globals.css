@@ -11,6 +11,16 @@ a {
   text-decoration: none;
 }
 
+label {
+  display: table-cell;
+  margin-bottom: 100px;
+}
+.sociallinks{
+  margin-top: 1em;
+  margin-bottom: 2em;
+
+}
+
 * {
   box-sizing: border-box;
 }

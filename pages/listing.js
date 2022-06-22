@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useMoralis, useWeb3Transfer } from "react-moralis";
 import axios from "axios";
+import styled from "styled-components";
+import { Panel } from "react95";
+import { Select, TextField,Fieldset,Button } from "react95";
 
 function Listing() {
   const fee = process.env.NEXT_PUBLIC_FEE_AMOUNT;
@@ -27,6 +30,24 @@ function Listing() {
     REDDIT: "Reddit",
     WEBSITE: "Website",
   };
+  const optionsyesno = [
+    { value: true, label: "YES" },
+    { value: false, label: "NO" },
+  ];
+  const optionsproyect = [
+    { value: "NFTs", label: "NFTs" },
+    { value: "Token", label: "Token" },
+    { value: "Validator Node", label: "Validator Node" },
+  ];
+  const optionssociallinks = [
+    { value: "Discord", label: "DISCORD" },
+    { value: "Twitter", label: "TWITTER" },
+    { value: "Telegram", label: "TELEGRAM" },
+    { value: "Reddit", label: "REDDIT" },
+    { value: "Website", label: "WEBSITE" },
+
+
+  ];
 
   async function onChange(e) {
     if (!e.target.files) return;
@@ -145,17 +166,19 @@ function Listing() {
           <p>{isAuthenticated}</p>
           <form onSubmit={handleFormSubmit}>
             <label>Is your project Radix based? </label>
-            <select
+            <Select
+              formatDisplay={(opt) => `${opt.label.toUpperCase()} `}
               onChange={(e) =>
                 setFormFields({ ...formFields, radixBased: e.target.value })
               }
-            >
-              <option value={"false"}>No</option>
-              <option value={"true"}>Yes</option>
-            </select>
+              options={optionsyesno}
+              width={90}
+            />
+            <br />
+
             <br />
             <label>Name of the project </label>
-            <input
+            <TextField
               type="text"
               onChange={(e) =>
                 setFormFields({ ...formFields, name: e.target.value })
@@ -163,46 +186,56 @@ function Listing() {
             />
             <br />
             <label>Description </label>
-            <textarea
+            <TextField
+              multiline
+              rows={2}
+              fullWidth
               onChange={(e) =>
-                setFormFields({ ...formFields, description: e.target.value })
+                setFormFields({
+                  ...formFields,
+                  description: e.target.value,
+                })
               }
             />
             <br />
             <label>Is your project? </label>
-            <select
+            
+            <Select
               onChange={(e) =>
-                setFormFields({ ...formFields, projectType: e.target.value })
+                setFormFields({
+                  ...formFields,
+                  projectType: e.target.value,
+                })
               }
-            >
-              <option value="NFTs">NFTs</option>
-              <option value="Token">Token</option>
-              <option value="Validator Node">Validator Node</option>
-            </select>
+  
+              options={optionsproyect}
+              width={190}
+            />
             <br />
-            <label> Logo </label>
+            <Fieldset label="Logo">
+           
             <input type="file" onChange={onChange}></input>
             {imgUrl && <img src={imgUrl} height="150" width="150" />}
+            </Fieldset>
             <br />
+            <Fieldset label="Social Links">
             {projectLinks.map((link, index) => (
-              <div key={index}>
-                <select onChange={(e) => (link.type = e.target.value)}>
-                  {Object.keys(SOCIAL_LINKS).map((link, index) => (
-                    <option key={index}>{link}</option>
-                  ))}
-                </select>
-
-                <input
-                  name="link"
+              <div key={index} display="flex" className="sociallinks">
+                <Select fullWidth onChange={(e) => (link.type = e.target.value)}
+                options={optionssociallinks}/>
+                <TextField 
+                fullWidth
+                name="link"
                   placeholder="https://your.site.io"
-                  value={link.link}
-                  onChange={(event) => handleFormChange(index, event)}
-                />
+                  value={link.link} 
+                  onChange={(event) => handleFormChange(index, event)}/>
               </div>
             ))}
-            <button onClick={addLinks}>Add More Links..</button>
+             <Button onClick={addLinks}>Add More Links..</Button>
+            </Fieldset>
+           
             <br />
-            <button type="submit"> Submit </button>
+            <Button fullWidth type="submit"> Submit </Button>
           </form>
           {loading && <p>PROCESSING, PLEASE DO NOT REFRESH THE PAGE</p>}
         </>
