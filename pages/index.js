@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <div className={styles.container}>
       {!isAuthenticated ? (
-        <button onClick={handleClick}>authenticate</button>
+        <Button fullWidth onClick={handleClick}>AUTHENTICATE</Button>
       ) : (
         <>
         <Fieldset label="Select one">

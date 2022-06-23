@@ -186,6 +186,7 @@ function Listing() {
             />
             <br />
             <label>Description </label>
+            
             <TextField
               multiline
               rows={2}
@@ -212,6 +213,8 @@ function Listing() {
               width={190}
             />
             <br />
+            <br />
+
             <Fieldset label="Logo">
            
             <input type="file" onChange={onChange}></input>

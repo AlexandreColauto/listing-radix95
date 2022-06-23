@@ -42,11 +42,9 @@ const GlobalStyles = createGlobalStyle`
   }
 
   body {
-    font-family: 'ms_sans_serif';
-  }
+    font-family: 'ms_sans_serif';  }
   ${styleReset}
 `;
-//FRONTEND
 const Wrapper = styled.div``;
 
 function MyApp({ Component, pageProps }) {
@@ -58,8 +56,8 @@ function MyApp({ Component, pageProps }) {
           <Window style={{ width: 600 }}>
             <WindowHeader className="window-header">
               <span>Listing.exe</span>
-              <Button>
-                <span className="close-icon" />
+              <Button >
+                X
               </Button>
             </WindowHeader>
             <WindowContent>

@@ -46,16 +46,17 @@ function Browser() {
 `;
   };
   return (
-    <Panel
-        variant="outside"
-        shadow
-        style={{ padding: "0.5rem", lineHeight: "1.5", width: 600 }}
-      >
+    
     <div>
       {!details ? (
         <div>
           {itemsMetadata &&
             itemsMetadata.map((item, index) => (
+              <Panel
+              variant="outside"
+              shadow
+              style={{ padding: "0.5rem", lineHeight: "1.5", width: 600 }}
+              >
               <div key={index} onClick={() => setDetails(item)}>
                 <img src={item.logoUrl} width="50" height="50" />
                 <span>{item.name}</span>
@@ -71,6 +72,7 @@ function Browser() {
                 </p>
                 <hr />
               </div>
+              </Panel>
             ))}
         </div>
       ) : (
@@ -79,7 +81,6 @@ function Browser() {
         </div>
       )}
     </div>
-    </Panel>
   );
 }
 

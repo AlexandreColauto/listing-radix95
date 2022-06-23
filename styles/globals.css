@@ -1,9 +1,20 @@
+@font-face {
+  font-family: 'ms_sans_serif';
+  src: url('./fonts/MS Sans Serif 8pt.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal
+}
+@font-face {
+  font-family: 'ms_sans_serif';
+  src: url('./fonts/MS_Sans_Serif_8pt_bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal
+}
 html,
 body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  
+ font-size: 1.2em;
+ font-family: ms_sans_serif;
 }
 
 a {
@@ -12,8 +23,10 @@ a {
 }
 
 label {
+  margin-top: 1em;
+  margin-bottom: 2em;
   display: table-cell;
-  margin-bottom: 100px;
+  vertical-align: middle;
 }
 .sociallinks{
   margin-top: 1em;
