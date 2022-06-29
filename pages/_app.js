@@ -53,20 +53,18 @@ function MyApp({ Component, pageProps }) {
       <div>
         <GlobalStyles />
         <ThemeProvider theme={original}>
-          <Window style={{ width: 600 }}>
+          <Window style={{ width: 800 }}>
             <WindowHeader className="window-header">
               <span>Listing.exe</span>
-              <Button >
-                X
-              </Button>
+              <Button>X</Button>
             </WindowHeader>
             <WindowContent>
-              <MoralisProvider
+              {/* <MoralisProvider
                 serverUrl={process.env.NEXT_PUBLIC_SERVERURL}
                 appId={process.env.NEXT_PUBLIC_APPID}
-              >
-                <Component {...pageProps} />
-              </MoralisProvider>
+              > */}
+              <Component {...pageProps} />
+              {/* </MoralisProvider> */}
             </WindowContent>
           </Window>
         </ThemeProvider>
