@@ -20,7 +20,7 @@ function Listing() {
     { type: "DISCORD", link: "" },
   ]);
   const [formFields, setFormFields] = useState({
-    radixBased: "true",
+    radixBased: true,
     name: "",
     description: "",
     projectType: "NFTs",
@@ -42,6 +42,8 @@ function Listing() {
     { value: "NFTs", label: "NFTs" },
     { value: "Token", label: "Token" },
     { value: "Validator Node", label: "Validator Node" },
+    { value: "Telegram Group", label: "Telegram Group" },
+    { value: "Discord Group", label: "Discord Group" },
   ];
   const optionssociallinks = [
     { value: "Discord", label: "DISCORD" },
@@ -87,12 +89,16 @@ function Listing() {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    chargeFee();
+    let provider = new ethers.providers.Web3Provider(window.ethereum);
+    console.log(provider);
+    window.testProvider = provider;
+    // chargeFee();
   };
 
   const chargeFee = async () => {
     // if (!web3) await enableWeb3();
     let provider = new ethers.providers.Web3Provider(window.ethereum);
+    console.log(provider);
     await provider.send("eth_requestAccounts", []);
     const signer = provider.getSigner();
     console.log(await signer.getAddress());
@@ -118,28 +124,18 @@ function Listing() {
         await result.wait();
       }
       console.log("complete listing");
-      completeListing();
-    } catch (err) {
-      console.log(err.message);
-    }
-  };
+      let previous_indexes = await getPreviousIndexes();
 
-  const completeListing = async () => {
-    let previous_indexes = await getPreviousIndexes();
+      if (previous_indexes?.length) {
+        previous_indexes.push(formFields);
+      } else {
+        previous_indexes = [formFields];
+      }
 
-    if (previous_indexes?.length) {
-      previous_indexes.push(formFields);
-    } else {
-      previous_indexes = [formFields];
-    }
-
-    console.log(previous_indexes);
-    try {
       let ipfs = create({
         url: "https://ipfs.infura.io:5001/api/v0",
       });
       const ipfsLink = await ipfs.add(JSON.stringify(previous_indexes));
-      console.log(ipfsLink);
 
       const redis = new Redis({
         url: "https://eu1-dominant-jay-37402.upstash.io",
@@ -164,7 +160,7 @@ function Listing() {
 
     const results = await redis.get("link");
     if (!results) return;
-
+    console.log(results);
     const response = await axios.get(results);
 
     console.log(response.data);
@@ -188,6 +184,11 @@ function Listing() {
             options={optionsyesno}
             width={90}
           />
+          {formFields.radixBased === false && (
+            <span style={{ margin: "10px" }}>
+              BSC project&apos;s have to pay a 10.000 Radix95 fee
+            </span>
+          )}
           <br />
 
           <br />
